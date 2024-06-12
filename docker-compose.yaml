@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7.0.11-alpine
+    container_name: redis-coder-byte
+    ports:
+      - 6379:6379
+    volumes:
+      - .docker/redis/data:/data
+    command:
+      - /bin/sh
+      - -c
+      - 'redis-server --save 30 1 --requirepass redis'
