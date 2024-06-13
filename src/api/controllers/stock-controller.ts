@@ -4,6 +4,7 @@ import {
     Get,
     Query
 } from "@nestjs/common"
+import { isNil } from 'lodash'
 
 import { ProviderName } from "../nest-components/providers/provider-name"
 import { StockService } from "src/domain/stock/service"
@@ -17,11 +18,15 @@ export class StockController {
     ) {}
 
     @Get('/')
-    public getCompanyInfo(
+    public getStock(
         @Query(new ValidationPipe()) query: GetStockRequestValidator
     ) {
-        const name = query.getByCompanyName()
+        const { name, symbol } = query.getSchema()
+        
+        if(isNil(symbol) === false) {
+            return this._stockService.getStockBySymbol(symbol)
+        }
 
-        return this._stockService.getStock(name)
+        return this._stockService.getStockByName(name)
     }
 }

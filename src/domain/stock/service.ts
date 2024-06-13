@@ -2,9 +2,13 @@ import { CACHE_MANAGER, Cache } from "@nestjs/cache-manager"
 import { Inject } from "@nestjs/common"
 import { 
     Observable, 
+    delayWhen, 
     map, 
     mergeMap, 
-    tap 
+    tap,
+    switchMap,
+    from,
+    of
 } from "rxjs"
 
 import { IYahooFinanceAdaptor } from "../adaptor/yahoo-finance-adaptor"
@@ -26,28 +30,81 @@ export class StockService {
         private readonly _yahooFinanceAdaptor: IYahooFinanceAdaptor
     ) {}
 
-    public getStock(name: string):Observable<GetStockResponse> {
-        return this._yahooFinanceAdaptor.getCompanyInfo(name).pipe(
-            tap(res => {
-                if(res.isSuccess === false) {
-                    throw new BadRequestError(StockServiceError.cannotGetCompanyInfo(name))
-                }
-            }),
-            mergeMap(res => {
-                return this._yahooFinanceAdaptor.getStockPrice(res.yahooFinanceResponse.symbol)
-            }),
-            tap(res => {
-                if(res.isSuccess === false) {
-                    throw new BadRequestError(StockServiceError.cannotGetStockPrice(res.reasons[0]))
-                }
-            }),
-            map(res => {
-                const { shortName, symbol, price, currency } = res.yahooFinanceResponse
+    public getStockBySymbol(symbol: string): Observable<GetStockResponse> {
+        const key = this._generateRedisKey(symbol)
 
-                const stock = new Stock(shortName, symbol, price, currency)
-
-                return createStockDto(stock)
+        return from(this._cacheRedis.get<string>(key)).pipe(
+            switchMap(data => {
+                if(data) {
+                    return of(JSON.parse(data))
+                } 
+                else {
+                    return this._yahooFinanceAdaptor.getStockPrice(symbol).pipe(
+                        tap(res => {
+                            if(res.isSuccess === false) {
+                                throw new BadRequestError(StockServiceError.cannotGetStockPrice(res.reasons[0]))
+                            }
+                        }),
+                        map(res => {
+                            const { shortName, symbol, price, currency } = res.yahooFinanceResponse
+                            const stock = new Stock(shortName, symbol, price, currency)
+            
+                            return createStockDto(stock)
+                        }),
+                        delayWhen(stock => {
+                            const data = JSON.stringify(stock)
+                            const ttl = 60 * 1000 // 60 sec
+            
+                            return this._cacheRedis.set(key, data, ttl)
+                        })
+                    )
+                }
             })
         )
+    }
+
+    public getStockByName(name: string):Observable<GetStockResponse> {
+        const key = this._generateRedisKey(name)
+
+        return from(this._cacheRedis.get<string>(key)).pipe(
+            switchMap(data => {
+                if(data) {
+                    return of(JSON.parse(data))
+                } 
+                else {
+                    return this._yahooFinanceAdaptor.getCompanyInfo(name).pipe(
+                        tap(res => {
+                            if(res.isSuccess === false) {
+                                throw new BadRequestError(StockServiceError.cannotGetCompanyInfo(name))
+                            }
+                        }),
+                        mergeMap(res => {
+                            return this._yahooFinanceAdaptor.getStockPrice(res.yahooFinanceResponse.symbol)
+                        }),
+                        tap(res => {
+                            if(res.isSuccess === false) {
+                                throw new BadRequestError(StockServiceError.cannotGetStockPrice(res.reasons[0]))
+                            }
+                        }),
+                        map(res => {
+                            const { shortName, symbol, price, currency } = res.yahooFinanceResponse
+                            const stock = new Stock(shortName, symbol, price, currency)
+            
+                            return createStockDto(stock)
+                        }),
+                        delayWhen(stock => {
+                            const data = JSON.stringify(stock)
+                            const ttl = 60 * 1000 // 60 sec
+            
+                            return this._cacheRedis.set(key, data, ttl)
+                        })
+                    )
+                }
+            })
+        )
+    }
+
+    private _generateRedisKey(key: string): string {
+        return `${process.env.NODE_ENV}:${key}`
     }
 }

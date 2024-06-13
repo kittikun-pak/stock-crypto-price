@@ -12,7 +12,6 @@ export class ValidationPipe<T = any> implements PipeTransform<T> {
         
 
         if(isEmpty(mappedErrors) === false) {
-            //throw new HttpException('BadRequestError', HttpStatus.BAD_REQUEST, { cause: mappedErrors})
             throw new BadRequestError({
                 domain: 'Stock-Crypto-Price',
                 code: 'invalid input',

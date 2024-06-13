@@ -1,24 +1,33 @@
 import { 
     ValidateIf, 
     IsDefined,
-    IsString, 
+    IsOptional,
+    IsString,
+    IsNotEmpty 
 } from "class-validator"
-import { isNil } from "lodash"
 
 export class GetStockRequestValidator {
-    @ValidateIf(o => isNil(o.bySymbol))
-    @IsDefined()
+    @IsOptional()
+    @IsNotEmpty()
     @IsString()
     public byCompanyName: string
 
-    @ValidateIf(o => isNil(o.byCompanyName))
-    @IsDefined()
+    @IsOptional()
+    @IsNotEmpty()
     @IsString()
     public bySymbol: string
 
-    public getByCompanyName(): string {
-        return this.byCompanyName ?? this.bySymbol
+    @ValidateIf(o => (!o.byCompanyName && !o.bySymbol) || (o.byCompanyName && o.bySymbol))
+    @IsDefined({message: 'Provide either byCompanyName or bySymbol, and only one of them'})
+    protected readonly combinedCheck: undefined;
+
+    public getSchema() {
+        return {
+            name: this.byCompanyName ?? null,
+            symbol: this.bySymbol ?? null
+        }
     }
+    
 }
 
 

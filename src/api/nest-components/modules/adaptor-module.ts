@@ -1,15 +1,18 @@
 import { Module } from "@nestjs/common"
 
-import { yahooFinanceProvider } from "../providers/adaptor"
+import { coinCapProvider, yahooFinanceProvider } from "../providers/adaptor"
+import { ConfigModule } from "./config-module"
 
 
 @Module({
-    imports: [],
+    imports: [ ConfigModule ],
     providers: [
-        yahooFinanceProvider
+        yahooFinanceProvider,
+        coinCapProvider
     ],
     exports: [
-        yahooFinanceProvider
+        yahooFinanceProvider,
+        coinCapProvider
     ]
 })
 export class AdaptorModule {}

@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common"
 
 import { AdaptorModule } from "./adaptor-module"
 import { CacheRedisModule } from './redis-module'
-import { stockServiceProvider } from "../providers/service"
+import { cryptoServiceProvider, stockServiceProvider } from "../providers/service"
 
 @Module({
     imports: [ 
@@ -10,10 +10,12 @@ import { stockServiceProvider } from "../providers/service"
         AdaptorModule 
     ],
     providers: [
-        stockServiceProvider
+        stockServiceProvider,
+        cryptoServiceProvider
     ],
     exports: [
-        stockServiceProvider
+        stockServiceProvider,
+        cryptoServiceProvider
     ]
 })
 export class ServiceModule {}
