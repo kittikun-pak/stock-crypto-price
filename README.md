@@ -24,8 +24,10 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+This project is developed by Nest Js
+- Using Domain Driven Design (DDD) approach
+- Redis
+- also provide postman-collection for testing api
 ## Installation
 
 ```bash
@@ -35,27 +37,14 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# start container
+$ docker compose up -d
+
+# development (run as local)
+$ npm start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support
