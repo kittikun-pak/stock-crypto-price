@@ -27,7 +27,7 @@
 This project is developed by Nest Js
 - Using Domain Driven Design (DDD) approach
 - Redis
-- also provide postman-collection for testing api
+- also provide postman-collection for testing APIs
 ## Installation
 
 ```bash
@@ -45,6 +45,19 @@ $ npm start
 
 # watch mode
 $ npm run start:dev
+```
+
+## Using APIs
+```
+1.) Get Stock
+- path: /stock
+- method: GET
+- Query parameters: byCompanyName, bySymbol (use only one of them)
+
+2.) Get Crypto
+- path: /crypto
+- method: GET
+- Query parameters: byCoinName
 ```
 
 ## Support
