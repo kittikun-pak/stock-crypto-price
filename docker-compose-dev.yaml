@@ -1,5 +1,11 @@
 version: '3.8'
 services:
+  api-server:
+   build: .
+   depends_on:
+      - redis
+   ports:
+    - "3000:3000"
 
   redis:
     image: redis:7.0.11-alpine

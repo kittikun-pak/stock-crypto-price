@@ -3,7 +3,7 @@
       "srvMode": false,
       "user": "",
       "password": "",
-      "serverAddress": "localhost",
+      "serverAddress": "mongodb-coder-byte",
       "port": 27017,
       "dbName": "StockCryptoPrice",
       "replicaSetName": ""

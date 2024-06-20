@@ -1,17 +1,40 @@
 import { ConfigService as NestConfigService } from "@nestjs/config"
 
-type coinMarketCap = {
+export type DbConfig = {
+    srvMode: boolean
+    user: string
+    password: string
+    serverAddress: string
+    port: number
+    dbName: string
+    replicaSetName: string
+}
+
+type CoinMarketCap = {
     baseUrl: string
 }
 
 interface Config {
-    coinCap(): coinMarketCap
+    dbConfig(): DbConfig
+    coinCap(): CoinMarketCap
 }
 
 export class ConfigService implements Config {
     constructor(private readonly _nestConfigService: NestConfigService) {}
+
+    public dbConfig(): DbConfig {
+        return {
+            srvMode: this._nestConfigService.get<boolean>('mongo.srvMode'),
+            user: this._nestConfigService.get<string>('mongo.user'),
+            password: this._nestConfigService.get<string>('mongo.password'),
+            serverAddress: this._nestConfigService.get<string>('mongo.serverAddress'),
+            port: this._nestConfigService.get<number>('mongo.port'),
+            dbName: this._nestConfigService.get<string>('mongo.dbName'),
+            replicaSetName: this._nestConfigService.get<string>('mongo.replicaSetName'),
+        }
+    }
     
-    public coinCap(): coinMarketCap {
+    public coinCap(): CoinMarketCap {
         return {
             baseUrl: this._nestConfigService.get<string>('coinCap.baseUrl')
         }
