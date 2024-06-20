@@ -2,7 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from "@nestjs/co
 import { Response } from "express"
 
 import { ProviderName } from "../providers/provider-name"
-import { CustomerError } from "src/domain/commons/errors"
+import { CustomError } from "src/domain/commons/errors"
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -19,7 +19,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
             message: exception.message
         }
 
-        if(exception instanceof CustomerError) {
+        if(exception instanceof CustomError) {
             responseObj = exception.getSchema()
         }
 

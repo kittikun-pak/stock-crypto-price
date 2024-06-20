@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { JwtAuthService } from './jwt-auth-service'
-import { UserRepository } from '../user'
+import { IUserRepository } from '../user'
 
 
 type LogRequest = {
@@ -18,7 +18,7 @@ type LoginResponse = {
 export class AuthService {
     constructor(
         private readonly _jwtAuthService: JwtAuthService,
-        private readonly _userRepository: UserRepository
+        private readonly _userRepository: IUserRepository
     ) {}
 
     public userLogin(payload: LogRequest): Observable<LoginResponse> {

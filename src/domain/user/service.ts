@@ -10,13 +10,13 @@ import {
     UserDomainService,
     CreateUserInput
 } from './domain-service'
-import { UserRepository } from './repository'
+import { IUserRepository } from './repository'
 
 
 export class UserService {
     constructor(
         @Inject(CACHE_MANAGER) private readonly _cacheRedis: Cache,
-        private readonly _userRepository: UserRepository,
+        private readonly _userRepository: IUserRepository,
         private readonly _userDomainService: UserDomainService,
     ) {}
 

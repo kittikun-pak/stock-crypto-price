@@ -7,7 +7,7 @@ import { YahooFinanceAdaptor } from "src/domain/adaptor/yahoo-finance-adaptor"
 import { StockService } from "src/domain/stock/service"
 import { CoinCapAdaptor } from "src/domain/adaptor/coincap-adaptor"
 import { CryptoService } from "src/domain/crypto/service"
-import { UserRepository, UserService } from "src/domain/user"
+import { IUserRepository, UserService } from "src/domain/user"
 import { UserDomainService } from "src/domain/user/domain-service"
 
 
@@ -38,7 +38,7 @@ export const userServiceProvider: Provider = {
     provide: ProviderName.USER_SERVICE,
     useFactory: (
         cacheRedis: Cache,
-        userRepository: UserRepository,
+        userRepository: IUserRepository,
         userDomainService: UserDomainService,
     ) => {
         return new UserService(cacheRedis, userRepository, userDomainService)
