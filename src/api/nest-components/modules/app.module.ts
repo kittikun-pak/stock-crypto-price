@@ -1,18 +1,25 @@
 import { Module } from '@nestjs/common'
 
 import { ServiceModule } from './service-module'
-import { StockController } from 'src/api/controllers/stock-controller'
+import { 
+  StockController,
+  CryptoController,
+  UserController 
+} from 'src/api/controllers/'
 import { filterProvider } from '../providers/filter'
-import { CryptoController } from 'src/api/controllers/crypto-controller'
+import { DatabaseModules } from './database-module'
+
 
 
 @Module({
   imports: [ 
+    DatabaseModules,
     ServiceModule,
   ],
   controllers: [ 
     StockController,
-    CryptoController 
+    CryptoController,
+    UserController
   ],
   providers: [
     ...filterProvider
