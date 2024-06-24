@@ -10,5 +10,12 @@
    },
    "coinCap": {
     "baseUrl": "https://api.coincap.io/v2/assets"
+   },
+   "redis": {
+      "url": "redis-coder-byte",
+      "port": 6379
+   },
+   "jwt": {
+      "secret": "stock-crypto-price-dev-secret"
    }
 }

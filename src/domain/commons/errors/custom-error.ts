@@ -5,7 +5,7 @@ import {
     Lang
 } from "./locale"
 
-export abstract class CustomerError extends HttpException {
+export abstract class CustomError extends HttpException {
     constructor(response: string | Record<string, any>, status: number) {
         super(response, status)
     }

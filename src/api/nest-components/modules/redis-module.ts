@@ -1,30 +1,27 @@
 import { Module } from '@nestjs/common'
 import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager'
 import { redisStore } from 'cache-manager-redis-yet'
-import { 
-    ConfigModule as NestConfigModule,
-    ConfigService as NestConfigService
-} from '@nestjs/config'
 
-const environment: string = process.env.NODE_ENV ?? 'local'
+import { ConfigModule } from './config-module'
+import { ConfigService } from 'src/infrastructure/config/config'
+import { ProviderName } from '../providers/provider-name'
+
 
 const redisOption: CacheModuleAsyncOptions = {
     isGlobal: true,
-    imports: [ NestConfigModule.forRoot({
-        envFilePath: `./config/${environment}.env`
-    }) ],
-    useFactory: async(config: NestConfigService) => {
+    imports: [ ConfigModule ],
+    useFactory: async(config: ConfigService) => {
         const store = await redisStore({
             socket: {
-                host: config.get<string>('REDIS_URL'),
-                port: parseInt(config.get<string>('REDIS_PORT'))
+                host: config.redisConfig().url,
+                port: config.redisConfig().port
             },
         })
         return {
             store: () => store
         }
     },
-    inject: [ NestConfigService ]
+    inject: [ ProviderName.ENV_CONFIG ]
 }
 
 @Module({

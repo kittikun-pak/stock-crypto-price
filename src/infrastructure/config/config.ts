@@ -14,9 +14,20 @@ type CoinMarketCap = {
     baseUrl: string
 }
 
+type JwtConfig = {
+    secret: string
+}
+
+type RedisConfig = {
+    url: string
+    port: number
+}
+
 interface Config {
     dbConfig(): DbConfig
     coinCap(): CoinMarketCap
+    jwtConfig(): JwtConfig
+    redisConfig(): RedisConfig
 }
 
 export class ConfigService implements Config {
@@ -39,4 +50,18 @@ export class ConfigService implements Config {
             baseUrl: this._nestConfigService.get<string>('coinCap.baseUrl')
         }
     }
+
+    public redisConfig(): RedisConfig {
+        return {
+            url: this._nestConfigService.get<string>('redis.url'),
+            port: this._nestConfigService.get<number>('redis.port')
+        }
+    }
+
+    public jwtConfig(): JwtConfig {
+        return {
+            secret: this._nestConfigService.get<string>('jwt.secret')
+        }
+    }
+
 }

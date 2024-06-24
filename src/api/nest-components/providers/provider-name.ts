@@ -9,6 +9,8 @@ export enum ProviderName {
     COIN_CAP_ADAPTOR = 'CoinCapAdaptor',
 
     // Service
+    JWT_SERVICE = "JwtService",
+    AUTH_SERVICE = 'AuthService',
     STOCK_SERVICE = 'StockService',
     CRYPTO_SERVICE = 'CryptoService',
     USER_SERVICE = 'UserService',

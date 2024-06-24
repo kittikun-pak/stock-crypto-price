@@ -1,7 +1,7 @@
 import { HttpStatus } from "@nestjs/common"
 import { clone } from "lodash"
 
-import { CustomerError } from "./custom-error"
+import { CustomError } from "./custom-error"
 import { Lang, Locale } from "./locale"
 
 export type BadRequestErrorMap = {
@@ -11,7 +11,7 @@ export type BadRequestErrorMap = {
     reasons: Locale[]
 }
 
-export class BadRequestError extends CustomerError {
+export class BadRequestError extends CustomError {
     public domain: string
     public code: string
     public message: string

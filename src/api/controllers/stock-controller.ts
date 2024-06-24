@@ -2,7 +2,8 @@ import {
     Controller,
     Inject,
     Get,
-    Query
+    Query,
+    UseGuards
 } from "@nestjs/common"
 import { isNil } from 'lodash'
 
@@ -10,6 +11,7 @@ import { ProviderName } from "../nest-components/providers/provider-name"
 import { StockService } from "src/domain/stock/service"
 import { ValidationPipe } from "../nest-components/pipes/validation-pipe"
 import { GetStockRequestValidator } from "../request-validator/stock/get-stock"
+import { PermissionGuard } from "../nest-components/guards/permission"
 
 @Controller('/stock')
 export class StockController {
@@ -19,7 +21,7 @@ export class StockController {
 
     @Get('/')
     public getStock(
-        @Query(new ValidationPipe()) query: GetStockRequestValidator
+        @Query(new ValidationPipe()) query: GetStockRequestValidator,
     ) {
         const { name, symbol } = query.getSchema()
         
