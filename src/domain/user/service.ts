@@ -2,8 +2,10 @@ import { Inject } from '@nestjs/common'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { 
     Observable,
+    catchError,
     delayWhen,
-    map
+    map,
+    throwError
 } from 'rxjs'
 
 import { 
@@ -23,7 +25,8 @@ export class UserService {
     public createUser(input: CreateUserInput): Observable<{ id: string }> {
         return this._userDomainService.createUser(input).pipe(
             delayWhen(user => this._userRepository.create(user)),
-            map(user => ({ id: user.getId() }))
+            map(user => ({ id: user.getId() })),
+            catchError(err => throwError(() => err))
         )
     }
 }

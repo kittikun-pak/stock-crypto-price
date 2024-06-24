@@ -4,14 +4,13 @@ import {
     map,
     tap,
     catchError,
-    NotFoundError,
     throwError
 } from 'rxjs'
 
 import { User } from './model'
 import { UserAuthentication } from './value-objects'
 import { IUserRepository } from './repository'
-import { BadRequestError } from '../commons/errors'
+import { BadRequestError, NotFoundError } from '../commons/errors'
 import { UserDomainServiceError } from './error'
 
 export type CreateUserInput = {
@@ -60,5 +59,4 @@ export class UserDomainService {
             })
         )
     }
-
 }

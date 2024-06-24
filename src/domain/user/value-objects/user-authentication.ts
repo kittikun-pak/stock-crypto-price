@@ -36,6 +36,10 @@ export class UserAuthentication extends ValueObject {
         return new UserAuthentication(this._password, salt)
     }
 
+    public isValidPassword(password: string): boolean {
+        return UserAuthentication.hashPassword(password, this._salt) === this._password
+    }
+
     public isEqual(valueObjectToCompareWith: this): boolean {
         const comparableFields: ComparableFieldSelector[] = [
             {

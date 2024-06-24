@@ -4,12 +4,11 @@ import { ServiceModule } from './service-module'
 import { 
   StockController,
   CryptoController,
-  UserController 
+  UserController,
+  AuthController
 } from 'src/api/controllers/'
 import { filterProvider } from '../providers/filter'
 import { DatabaseModules } from './database-module'
-
-
 
 @Module({
   imports: [ 
@@ -19,7 +18,8 @@ import { DatabaseModules } from './database-module'
   controllers: [ 
     StockController,
     CryptoController,
-    UserController
+    UserController,
+    AuthController
   ],
   providers: [
     ...filterProvider

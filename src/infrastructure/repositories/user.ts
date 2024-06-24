@@ -34,7 +34,7 @@ export class UserMongoRepository extends MongoRepository<User> implements IUserR
             email
         }
 
-        return from(this.collection.find(query)).pipe(
+        return from(this.collection.findOne(query)).pipe(
             tap((doc: UserSchema) => {
                 if(isNil(doc)) {
                     throw new NotFoundError(UserRepositoryError.notFoundByEmail(email))
