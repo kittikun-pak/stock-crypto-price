@@ -1,6 +1,6 @@
 FROM node:18.16.1-alpine3.18
 
-ENV NODE_ENV=dev
+ENV NODE_ENV=prod
 
 WORKDIR /usr/src/app
 
@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "start"]

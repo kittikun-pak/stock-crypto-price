@@ -2,7 +2,7 @@
    "mongo": {
       "srvMode": false,
       "user": "",
-      "password": "",
+      "password": "eUtlYJFGxHalCFrq",
       "serverAddress": "mongodb-coder-byte",
       "port": 27017,
       "dbName": "StockCryptoPrice",
