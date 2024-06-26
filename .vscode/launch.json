@@ -22,7 +22,7 @@
             "request": "launch",
             "runtimeArgs": [
                 "run",
-                "start:dev"
+                "start"
             ],
             "runtimeExecutable": "npm",
             "skipFiles": [
