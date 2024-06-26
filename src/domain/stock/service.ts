@@ -39,7 +39,7 @@ export class StockService {
                     return of(JSON.parse(data))
                 } 
                 else {
-                    return this._yahooFinanceAdaptor.getStockPrice(symbol).pipe(
+                    return this._yahooFinanceAdaptor.getStockPriceBySymbol(symbol).pipe(
                         tap(res => {
                             if(res.isSuccess === false) {
                                 throw new BadRequestError(StockServiceError.cannotGetStockPrice(res.reasons[0]))
@@ -79,7 +79,7 @@ export class StockService {
                             }
                         }),
                         mergeMap(res => {
-                            return this._yahooFinanceAdaptor.getStockPrice(res.yahooFinanceResponse.symbol)
+                            return this._yahooFinanceAdaptor.getStockPriceBySymbol(res.yahooFinanceResponse.symbol)
                         }),
                         tap(res => {
                             if(res.isSuccess === false) {

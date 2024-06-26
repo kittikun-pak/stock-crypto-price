@@ -61,7 +61,7 @@ export type YahooFinanceInquireResult = YahooFinanceInquirePriceSuccessResult | 
 
 export interface IYahooFinanceAdaptor {
     getCompanyInfo(name: string): Observable<YahooFinanceInquireCompanyInfoResult>
-    getStockPrice(symbol: string): Observable<YahooFinanceInquireResult>
+    getStockPriceBySymbol(symbol: string): Observable<YahooFinanceInquireResult>
 }
 
 export class YahooFinanceAdaptor implements IYahooFinanceAdaptor {
@@ -101,7 +101,7 @@ export class YahooFinanceAdaptor implements IYahooFinanceAdaptor {
         )
     }
 
-    public getStockPrice(symbol: string):Observable<YahooFinanceInquireResult> {
+    public getStockPriceBySymbol(symbol: string):Observable<YahooFinanceInquireResult> {
         return from(yahooFinance.quote(symbol)).pipe(
             map(res => {
                 const isSuccess = isNil(res.regularMarketPrice) === false && isNil(res.currency) === false
