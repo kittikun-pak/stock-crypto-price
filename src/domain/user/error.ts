@@ -17,6 +17,17 @@ export class UserRepositoryError {
             resourceId: email
         }
     }
+
+    public static notFoundById(id: string): NotFoundErrorMap {
+        return {
+            domain: Domain.User,
+            code: this.prefix + '002',
+            message: Locale.en(`user not found by id: ${id}`)
+                .th(`ไม่พบผู้ใช้งาน id: ${id}`)
+                .build(),
+            resourceId: id
+        }
+    }
 }
 
 export class UserDomainServiceError {

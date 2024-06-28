@@ -3,6 +3,7 @@ export enum ProviderName {
     REDIS = 'Redis',
     MONGO_CLIENT = 'MongoClient',
     MONGO_DB = 'MongoDb',
+  
 
     // Adaptor
     YAHOO_FINANCE_ADAPTOR = 'YahooFinanceAdaptor',

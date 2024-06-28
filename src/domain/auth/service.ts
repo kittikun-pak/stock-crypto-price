@@ -18,7 +18,7 @@ import { NotFoundError, UnauthorizedError } from '../commons/errors'
 import { AuthorizedServiceError } from './error'
 
 
-enum TokenPayloadType {
+export enum TokenPayloadType {
     USER = 'user'
 }
 
@@ -46,7 +46,7 @@ type TokenResponse = {
     expiresIn: number
 }
 
-type UserToken = {
+export type UserToken = {
     userId: string
     type: TokenPayloadType
 }
