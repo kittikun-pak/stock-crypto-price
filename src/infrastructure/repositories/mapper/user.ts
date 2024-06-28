@@ -13,6 +13,7 @@ export type UserSchema = {
     _id: string
     email: string
     authentication: UserAuthenticationSchema | null
+    balance: number
 }
 
 export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserSchema> {
@@ -20,7 +21,8 @@ export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserS
         const {
             _id, 
             email, 
-            authentication
+            authentication,
+            balance
         } = mongoDocument
 
         const userAuthentication = isNil(authentication) ? null : new UserAuthentication(authentication.password, authentication.salt)
@@ -28,7 +30,8 @@ export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserS
         return User.createFromExisting({
             id: _id, 
             email: email, 
-            authentication: userAuthentication
+            authentication: userAuthentication,
+            balance: balance
         })
     }
 
@@ -36,7 +39,8 @@ export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserS
         return {
             _id: model.getId(),
             email: model.getEmail(),
-            authentication: isNil(model.getAuthentication()) ? null : this._serializationAuthentication(model.getAuthentication())
+            authentication: isNil(model.getAuthentication()) ? null : this._serializationAuthentication(model.getAuthentication()),
+            balance: model.getBalance()
         }
     }
 

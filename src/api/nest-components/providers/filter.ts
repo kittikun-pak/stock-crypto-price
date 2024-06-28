@@ -1,7 +1,7 @@
 import { Provider } from "@nestjs/common"
 import { APP_FILTER } from "@nestjs/core"
-import { ErrorExceptionFilter } from "../filter/error-exception"
-import { HttpExceptionFilter } from "../filter/http-error-exception"
+import { ErrorExceptionFilter } from "../filters/error-exception"
+import { HttpExceptionFilter } from "../filters/http-error-exception"
 
 export const filterProvider: Provider[] = [
     {

@@ -13,6 +13,7 @@ import {
     CreateUserInput
 } from './domain-service'
 import { IUserRepository } from './repository'
+import { UserDto, createUserDto } from './dto'
 
 
 export class UserService {
@@ -21,6 +22,10 @@ export class UserService {
         private readonly _userRepository: IUserRepository,
         private readonly _userDomainService: UserDomainService,
     ) {}
+
+    public getUserById(id: string): Observable<UserDto> {
+        return this._userRepository.findById(id).pipe(map(user => createUserDto(user)))
+    }
 
     public createUser(input: CreateUserInput): Observable<{ id: string }> {
         return this._userDomainService.createUser(input).pipe(
