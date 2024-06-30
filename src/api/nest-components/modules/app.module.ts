@@ -5,7 +5,8 @@ import {
   StockController,
   CryptoController,
   UserController,
-  AuthController
+  AuthController,
+  PortController
 } from 'src/api/controllers/'
 import { filterProvider } from '../providers/filter'
 import { DatabaseModules } from './database-module'
@@ -19,7 +20,8 @@ import { DatabaseModules } from './database-module'
     StockController,
     CryptoController,
     UserController,
-    AuthController
+    AuthController,
+    PortController
   ],
   providers: [
     ...filterProvider

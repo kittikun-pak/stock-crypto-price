@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common'
 
-import { userDomainServiceProvider } from '../providers/domain-service'
+import { portDomainServiceProvider, userDomainServiceProvider } from '../providers/domain-service'
 import { RepositoryModule } from './repository-module'
 
 @Module({
     imports: [ RepositoryModule ],
     providers: [
-        userDomainServiceProvider
+        userDomainServiceProvider,
+        portDomainServiceProvider
     ],
     exports: [
-        userDomainServiceProvider
+        userDomainServiceProvider,
+        portDomainServiceProvider
     ]
 })
 export class DomainServiceModule {}

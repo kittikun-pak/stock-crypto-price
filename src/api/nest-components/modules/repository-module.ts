@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 
-import { userRepository } from '../providers/repository';
+import { portRepository, userRepository } from '../providers/repository';
 import { DatabaseModules } from './database-module';
 
 @Module({
@@ -8,10 +8,12 @@ import { DatabaseModules } from './database-module';
         DatabaseModules
     ],
     providers: [
-        userRepository
+        userRepository,
+        portRepository
     ],
     exports: [
-        userRepository
+        userRepository,
+        portRepository
     ]
 })
 export class RepositoryModule {}

@@ -11,6 +11,7 @@ import { IUserRepository, UserService } from "src/domain/user"
 import { UserDomainService } from "src/domain/user/domain-service"
 import { JwtAuthService } from "src/domain/auth/jwt-auth-service"
 import { AuthService } from "src/domain/auth/service"
+import { IPortRepository, PortDomainService, PortService } from "src/domain/port"
 
 
 export const stockServiceProvider: Provider = {
@@ -35,6 +36,17 @@ export const cryptoServiceProvider: Provider = {
     inject: [ CACHE_MANAGER, ProviderName.COIN_CAP_ADAPTOR ]
 }
 
+export const authServiceProvider: Provider = {
+    provide: ProviderName.AUTH_SERVICE,
+    useFactory: (
+        jwtAuthService: JwtAuthService,
+        userRepository: IUserRepository
+    ) => {
+        return new AuthService(jwtAuthService, userRepository)
+    },
+    inject: [ ProviderName.JWT_SERVICE, ProviderName.USER_REPOSITORY ]
+}
+
 export const userServiceProvider: Provider = {
     provide: ProviderName.USER_SERVICE,
     useFactory: (
@@ -47,13 +59,13 @@ export const userServiceProvider: Provider = {
     inject: [ CACHE_MANAGER, ProviderName.USER_REPOSITORY , ProviderName.USER_DOMAIN_SERVICE ]
 }
 
-export const authServiceProvider: Provider = {
-    provide: ProviderName.AUTH_SERVICE,
+export const portServiceProvider: Provider = {
+    provide: ProviderName.PORT_SERVICE,
     useFactory: (
-        jwtAuthService: JwtAuthService,
-        userRepository: IUserRepository
+        portRepository: IPortRepository,
+        portDomainService: PortDomainService
     ) => {
-        return new AuthService(jwtAuthService, userRepository)
+        return new PortService(portRepository, portDomainService)
     },
-    inject: [ ProviderName.JWT_SERVICE, ProviderName.USER_REPOSITORY ]
+    inject: [ ProviderName.PORT_REPOSITORY, ProviderName.PORT_DOMAIN_SERVICE ]
 }
