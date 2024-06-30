@@ -14,16 +14,16 @@ import {
 import { MongoRepository } from './commons/mongo-repository'
 import { 
     UserMongoRepositoryMapper, 
-    UserSchema 
+    UserMongoSchema 
 } from './mapper/user'
 import { NotFoundError } from 'src/domain/commons/errors'
 import { UserRepositoryError } from 'src/domain/user/error'
 
-type UserQuery = Filter<UserSchema>
+type UserQuery = Filter<UserMongoSchema>
 
 export class UserMongoRepository extends MongoRepository<User> implements IUserRepository {
     constructor(
-        private readonly db: Db,
+        db: Db,
         mapper: UserMongoRepositoryMapper
     ) {
         super(db.collection('users'), mapper)
@@ -35,7 +35,7 @@ export class UserMongoRepository extends MongoRepository<User> implements IUserR
         }
 
         return from(this.collection.findOne(query)).pipe(
-            tap((doc: UserSchema) => {
+            tap((doc: UserMongoSchema) => {
                 if(isNil(doc)) {
                     throw new NotFoundError(UserRepositoryError.notFoundByEmail(email))
                 }

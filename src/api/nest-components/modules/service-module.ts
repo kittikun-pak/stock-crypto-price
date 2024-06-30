@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common"
 import { 
     authServiceProvider,
     cryptoServiceProvider, 
+    portServiceProvider, 
     stockServiceProvider, 
     userServiceProvider 
 } from "../providers/service"
@@ -24,13 +25,15 @@ import { JwtModule } from "./jwt-module"
         stockServiceProvider,
         cryptoServiceProvider,
         userServiceProvider,
-        authServiceProvider
+        authServiceProvider,
+        portServiceProvider
     ],
     exports: [
         stockServiceProvider,
         cryptoServiceProvider,
         userServiceProvider,
-        authServiceProvider
+        authServiceProvider,
+        portServiceProvider
     ]
 })
 export class ServiceModule {}

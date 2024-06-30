@@ -2,8 +2,15 @@ import { Db } from 'mongodb'
 
 import { Provider } from '@nestjs/common'
 import { ProviderName } from './provider-name'
-import { UserMongoRepository } from 'src/infrastructure/repositories/user'
-import { UserMongoRepositoryMapper } from 'src/infrastructure/repositories/mapper/user'
+import { 
+    UserMongoRepository,
+    PortMongoRepository
+} from 'src/infrastructure/repositories'
+import { 
+    PortMongoRepositoryMapper,
+    UserMongoRepositoryMapper 
+} from 'src/infrastructure/repositories/mapper'
+import {  } from 'src/infrastructure/repositories'
 
 export const userRepository: Provider = {
     provide: ProviderName.USER_REPOSITORY,
@@ -11,4 +18,12 @@ export const userRepository: Provider = {
         return new UserMongoRepository(db, new UserMongoRepositoryMapper())
     },
     inject: [ ProviderName.MONGO_DB]
+}
+
+export const portRepository: Provider = {
+    provide: ProviderName.PORT_REPOSITORY,
+    useFactory: (db: Db) => {
+        return new PortMongoRepository(db, new PortMongoRepositoryMapper())
+    },
+    inject: [ ProviderName.MONGO_DB ]
 }

@@ -22,7 +22,7 @@ import { CreateUserRequestValidator } from '../request-validator/user/create-use
 export class UserController {
     constructor(
         @Inject(ProviderName.USER_SERVICE) private readonly _userService: UserService
-    ){}
+    ) {}
 
     @Post('/')
     public createUser(

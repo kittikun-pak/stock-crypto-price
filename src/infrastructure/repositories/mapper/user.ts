@@ -9,15 +9,15 @@ type UserAuthenticationSchema = {
     salt: string
 }
 
-export type UserSchema = {
+export type UserMongoSchema = {
     _id: string
     email: string
     authentication: UserAuthenticationSchema | null
     balance: number
 }
 
-export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserSchema> {
-    public deserialize(mongoDocument: UserSchema): User {
+export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserMongoSchema> {
+    public deserialize(mongoDocument: UserMongoSchema): User {
         const {
             _id, 
             email, 
@@ -35,7 +35,7 @@ export class UserMongoRepositoryMapper extends MongoRepositoryMapper<User, UserS
         })
     }
 
-    public serialize(model: User): UserSchema {
+    public serialize(model: User): UserMongoSchema {
         return {
             _id: model.getId(),
             email: model.getEmail(),
